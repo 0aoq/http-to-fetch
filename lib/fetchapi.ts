@@ -126,8 +126,8 @@ export class Request {
         // get body
         let body = "";
 
-        request.on("readable", function () {
-            body += request.read();
+        request.on("data", (chunk) => {
+            body += chunk;
         });
 
         this.text = async () => {
@@ -136,6 +136,12 @@ export class Request {
         };
 
         this.json = async () => {
+            // wait for body to become full!
+            if (body === "")
+                return setTimeout(async () => {
+                    return await this.json();
+                }, 1);
+
             // async turns this into Promise<object> instead of just string
             return JSON.parse(body);
         };
@@ -185,7 +191,7 @@ export class HTTPResponse {
 /**
  * @type Response
  * @description https://developer.mozilla.org/en-US/docs/Web/API/Response
- * 
+ *
  * Automatically builds HTTPResponse object with Request object
  */
 export type Response = {
@@ -201,5 +207,5 @@ export type fetch = (Request: Request, Response: Response) => HTTPResponse;
 export default {
     HTTPResponse,
     Request,
-    Headers
-}
+    Headers,
+};
