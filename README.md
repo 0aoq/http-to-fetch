@@ -1,8 +1,12 @@
 # http-to-fetch
 
-Very simple handler for converting `node:http`'s `IncomingMessage` object into a a [Fetch API Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+Very simple handler for converting `node:http`'s `IncomingMessage` object into a [Fetch API Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)
 
 ## Usage
+
+```
+npm install http-to-fetch
+```
 
 After starting a server using `node:http`, listen for requests and convert the objects. Example:
 
@@ -34,7 +38,7 @@ http.createServer((request, response) => {
 
 This library also includes a "Plugin API" that makes the whole process much more like the the native web Fetch API.
 
-Using a basic loader (or the one from [/example](/example/loader.ts)), just listen and handle the request.
+Using a basic loader (or the one from [/example](https://github.com/0aoq/http-to-fetch/tree/master/example/loader.ts)), just listen and handle the request.
 
 ```ts
 // (typescript)
