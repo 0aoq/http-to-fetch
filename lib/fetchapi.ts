@@ -146,8 +146,8 @@ export class Request {
  * @type ResponseOptions
  */
 export type ResponseOptions = {
-    status: number;
-    headers: Headers;
+    status?: number;
+    headers?: Headers;
     // method: "GET" | "POST" | "PUT" | "DELETE" | "OPTIONS" | "HEAD"; // DOESN'T BELONG HERE
 };
 
@@ -161,6 +161,8 @@ export class HTTPResponse {
     request?: Request; // DO NOT GIVE IN ENDPOINT HANDLE
 
     constructor(body: string, options: ResponseOptions, request: Request) {
+        if (!options.headers) options.headers = new Headers();
+
         // handle options
         options.headers = options.headers.st as any; // basically collapse
 
