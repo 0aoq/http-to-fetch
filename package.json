@@ -1,11 +1,12 @@
 {
   "name": "http-to-fetch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transform node:http requests into requests that match the browser Fetch API.",
   "main": "lib/fetchapi.js",
   "scripts": {
     "watch": "npx tsc -w",
-    "build:docs": "npx typedoc"
+    "build:docs": "npx typedoc",
+    "build": "npx tsc"
   },
   "type": "module",
   "author": "0aoq",
@@ -13,9 +14,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^18.7.19",
+    "typedoc": "^0.23.15",
     "typescript": "^4.8.3"
-  },
-  "optionalDependencies": {
-    "typedoc": "^0.23.15"
   }
 }

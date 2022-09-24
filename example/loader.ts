@@ -19,13 +19,26 @@ import { Plugin } from "../lib/pluginapi.js";
 // start server
 let endpointList: { [key: string]: any } = {};
 const server = http.createServer((request, response) => {
-    const pathname = request.url!.toString() as string;
+    let pathname = request.url!.toString() as string;
 
     // check if endpoint handler exists
-    if (endpointList[pathname]) {
+    if (endpointList[pathname] || endpointList["all"]) {
         // create request
         const req = new Request();
         req.translate(request, response);
+
+        // call all handler first
+        if (!endpointList[pathname] && endpointList["all"]) {
+            return endpointList["all"](
+                req,
+                class extends HTTPResponse {
+                    // response object but it supplies the request automatically
+                    constructor(body: string, options: ResponseOptions) {
+                        super(body, options, req);
+                    }
+                }
+            );
+        }
 
         // run handler and return
         return endpointList[pathname](
@@ -92,6 +105,12 @@ export function bindEndpoint(params: { endpoint: string; fetch: fetch }) {
 
     // update plugin client bindings
     pluginClient.bindOnRegEndpoint((endpoint: string, fetch: fetch) => {
+        if (endpoint === "all") {
+            // call this endpoint every time
+            endpointList["all"] = fetch;
+        }
+
+        // normal
         endpointList[endpoint] = fetch;
         endpointList[`${endpoint}/`] = fetch; // account for trailing slash
     });
