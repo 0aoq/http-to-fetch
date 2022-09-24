@@ -90,9 +90,12 @@ export class Headers extends Object {
  */
 export class Request {
     headers: Headers = new Headers();
-    path: string = ""; // TODO: construct full url instead of just adding this.path
     method: string = "GET";
     origin?: http.ServerResponse;
+
+    host: string = "";
+    hostname: string = "";
+    path: string = "";
 
     text: () => Promise<string> = undefined as any;
     json: () => Promise<object> = undefined as any;
@@ -114,8 +117,11 @@ export class Request {
 
         // build this request object based on the request param
         this.headers.headerList = request.headers as any;
-        this.path = request.url as string; // TODO: construct full url instead of just adding this.path
         this.method = request.method || "GET";
+
+        this.path = request.url as string;
+        this.host = request.headers.host as string;
+        this.hostname = this.host;
 
         // get body
         let body = "";
