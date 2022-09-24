@@ -1,0 +1,8 @@
+{
+    "entryPoints": [
+        "lib/pluginapi.ts",
+        "lib/fetchapi.ts",
+        "example/loader.ts"
+    ],
+    "out": "docs"
+}
