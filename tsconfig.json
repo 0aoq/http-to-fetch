@@ -13,5 +13,6 @@
             "@types/node"
         ],
         "outDir": "package",
+        "declaration": true
     }
 }
