@@ -96,6 +96,7 @@ export class Request {
     host: string = "";
     hostname: string = "";
     path: string = "";
+    search: string = "";
 
     text: () => Promise<string> = undefined as any;
     json: () => Promise<object> = undefined as any;
@@ -119,9 +120,10 @@ export class Request {
         this.headers.headerList = request.headers as any;
         this.method = request.method || "GET";
 
-        this.path = request.url as string;
+        this.path = request.url!.split("?")[0] as string;
         this.host = request.headers.host as string;
         this.hostname = this.host;
+        this.search = `?${request.url!.split("?")[0] || ""}`;
 
         // get body
         let body = "";
@@ -140,7 +142,7 @@ export class Request {
             if (body === "")
                 return setTimeout(async () => {
                     return await this.json();
-                }, 1);
+                }, 5);
 
             // async turns this into Promise<object> instead of just string
             return JSON.parse(body);

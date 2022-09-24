@@ -1,6 +1,6 @@
 {
   "name": "http-to-fetch",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Transform node:http requests into requests that match the browser Fetch API.",
   "main": "package/lib/fetchapi.js",
   "scripts": {
