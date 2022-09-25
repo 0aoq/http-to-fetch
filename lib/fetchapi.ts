@@ -92,6 +92,7 @@ export class Request {
     headers: Headers = new Headers();
     method: string = "GET";
     origin?: http.ServerResponse;
+    request?: http.IncomingMessage;
 
     host: string = "";
     hostname: string = "";
@@ -115,6 +116,7 @@ export class Request {
         response: http.ServerResponse
     ) {
         this.origin = response;
+        this.request = request;
 
         // build this request object based on the request param
         this.headers.headerList = request.headers as any;
